@@ -1,4 +1,4 @@
-package com.wuxl.retrofit.retrofit.http;
+package com.wuxl.retrofit.retrofit.http.util;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;

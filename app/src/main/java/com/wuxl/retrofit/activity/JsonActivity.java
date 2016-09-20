@@ -1,26 +1,38 @@
-package com.wuxl.retrofit.retrofit;
+package com.wuxl.retrofit.activity;
 
-import android.support.v7.app.AppCompatActivity;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.wuxl.retrofit.entity.NewsEntity;
+import com.wuxl.retrofit.retrofit.R;
 import com.wuxl.retrofit.retrofit.http.JsonrpcCallBack;
-import com.wuxl.retrofit.retrofit.service.impl.GitHubService;
+import com.wuxl.retrofit.service.impl.JsonService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class JsonActivity extends AppCompatActivity {
 
     private ListView mTestLsv;
-    private JsonrpcCallBack<List<GovEntity>> cusCallBack;
+    private JsonrpcCallBack<List<NewsEntity>> cusCallBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+
+        Toolbar toolbar;
         setContentView(R.layout.activity_test);
 
         Button btn_test = (Button) findViewById(R.id.btn_test);
@@ -36,14 +48,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void test() {
 
-        cusCallBack = new JsonrpcCallBack<List<GovEntity>>() {
+        cusCallBack = new JsonrpcCallBack<List<NewsEntity>>() {
             @Override
-            public void onSuccess(List<GovEntity> govEntities) {
+            public void onSuccess(List<NewsEntity> govEntities) {
                 List<String> strList = new ArrayList<String>();
                 for (int i = 0; i < govEntities.size(); i++) {
                     strList.add(govEntities.get(i).getTitle());
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, strList);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(JsonActivity.this, android.R.layout.simple_list_item_1, strList);
                 mTestLsv.setAdapter(adapter);
             }
 
@@ -52,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        new GitHubService().queryLatestPhotoNews(8, cusCallBack);
+        new JsonService().queryLatestPhotoNews(8, cusCallBack);
 
     }
 

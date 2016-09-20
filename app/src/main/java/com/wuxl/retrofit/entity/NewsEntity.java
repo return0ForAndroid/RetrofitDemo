@@ -1,17 +1,17 @@
-package com.wuxl.retrofit.retrofit;
+package com.wuxl.retrofit.entity;
 
 import java.util.Date;
 
 /**
  * Created by WUXL on 2016/8/15.
  */
-public class GovEntity {
+public class NewsEntity {
     private String title;
     private String firstImgUrl;
     private String articleUrl;
     private Date publishTime;
 
-    public GovEntity() {
+    public NewsEntity() {
     }
 
     public String getTitle() {
